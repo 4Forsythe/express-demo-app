@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 
 import { prisma } from './lib/prisma-client'
+import { logger } from './config/logger.config'
 
 import TweetController from './tweet/tweet.controller'
 
@@ -28,12 +29,12 @@ async function main() {
   })
 
   app.use((err: Error, req: Request, res: Response) => {
-    console.error(err.stack)
+    logger.error(err.stack)
     res.status(500).send('Woops! Something error...')
   })
 
   app.listen(PORT, () => {
-    console.log(`Server is running at ${PORT} port.`)
+    logger.info(`Server is running at ${PORT} port.`)
   })
 }
 
@@ -42,7 +43,7 @@ main()
     await prisma.$connect()
   })
   .catch(async (err) => {
-    console.error(err)
+    logger.error(err)
     await prisma.$disconnect()
     process.exit(1)
   })
