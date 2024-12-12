@@ -10,9 +10,9 @@ const router = Router()
 const tweetService = new TweetService()
 
 router.post('/', middleware, async (req: Request, res: Response) => {
-  const { body } = req.body
+  const body = req.body
 
-  const validation = tweetSchema.safeParse(body)
+  const validation = await tweetSchema.safeParseAsync(body)
 
   if (!validation.success) {
     return res.status(400).json({
