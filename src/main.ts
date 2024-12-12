@@ -4,6 +4,8 @@ import dotenv from 'dotenv'
 
 import { prisma } from './lib/prisma-client'
 
+import TweetController from './tweet/tweet.controller'
+
 dotenv.config()
 
 const app = express()
@@ -15,6 +17,8 @@ async function main() {
   app.get('/', (req, res) => {
     res.send('Server is running now.')
   })
+
+  app.use('/tweets', TweetController)
 
   app.all('*', (req, res) => {
     res.status(404).json({
