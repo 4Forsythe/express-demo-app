@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express'
 
+import { middleware } from '@/middleware'
 import { tweetSchema } from './tweet.schema'
 
 import TweetService from './tweet.service'
@@ -8,7 +9,7 @@ const router = Router()
 
 const tweetService = new TweetService()
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', middleware, async (req: Request, res: Response) => {
   const { body } = req.body
 
   const validation = tweetSchema.safeParse(body)
