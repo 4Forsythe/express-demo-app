@@ -1,4 +1,6 @@
 import express, { Request, Response } from 'express'
+import helmet from 'helmet'
+import compression from 'compression'
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 
@@ -12,9 +14,11 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 80
 
-app.use(bodyParser.json())
-
 async function main() {
+  app.use(helmet())
+  app.use(compression())
+  app.use(bodyParser.json())
+
   app.get('/', (req, res) => {
     res.send('Server is running now.')
   })
